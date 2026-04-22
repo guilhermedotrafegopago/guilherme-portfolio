@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guilherme Soares — Gestor de Tráfego Pago</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #0D1B2A;
+    --dark2: #1A3A5C;
+    --accent: #2E86C1;
+    --accent-light: #7EC8E3;
+    --bg: #F5F8FC;
+    --surface: #ffffff;
+    --border: rgba(0,0,0,0.08);
+    --text: #1a1a2e;
+    --muted: #5a6a7e;
+    --green: #1D9E75;
+    --red: #D85A30;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--dark);
+    color: #fff;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,134,193,0.18) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,134,193,0.1) 0%, transparent 70%);
+  }
+  .hero-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(46,134,193,0.2);
+    color: var(--accent-light);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+    border: 1px solid rgba(126,200,227,0.2);
+    animation: fadeUp 0.5s ease both;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent-light);
+  }
+  .hero .role {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+  .contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    animation: fadeUp 0.5s ease 0.3s both;
+  }
+  .ctag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.82);
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  }
+  .ctag:hover {
+    background: rgba(46,134,193,0.2);
+    border-color: rgba(126,200,227,0.35);
+    transform: translateY(-1px);
+  }
+  .ctag svg { flex-shrink: 0; opacity: 0.75; }
+
+  /* MAIN CONTENT */
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  /* SERVICE CARDS */
+  .svc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    animation: fadeUp 0.4s ease both;
+  }
+  .svc:nth-child(1) { animation-delay: 0.05s; }
+  .svc:nth-child(2) { animation-delay: 0.1s; }
+  .svc:nth-child(3) { animation-delay: 0.15s; }
+  .svc:nth-child(4) { animation-delay: 0.2s; }
+
+  .svc-head {
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    transition: background 0.15s;
+    user-select: none;
+  }
+  .svc-head:hover { background: #f7fafd; }
+  .svc-left { display: flex; align-items: center; gap: 14px; }
+
+  .svc-icon {
+    width: 42px; height: 42px;
+    border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .svc-title { font-size: 0.95rem; font-weight: 500; color: var(--text); }
+  .svc-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .chev {
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+  }
+  .svc.open .chev { transform: rotate(180deg); }
+
+  .svc-body {
+    border-top: 1px solid var(--border);
+    padding: 0 1.5rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.25s ease;
+  }
+  .svc.open .svc-body {
+    max-height: 700px;
+    padding: 1.4rem 1.5rem;
+  }
+
+  .sec { margin-bottom: 1.2rem; }
+  .sec:last-child { margin-bottom: 0; }
+  .sec-t {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.55rem;
+  }
+  .sec-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .items { list-style: none; }
+  .items li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    padding: 3px 0 3px 18px;
+    position: relative;
+    line-height: 1.55;
+  }
+  .items li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 10px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+  .items.green li::before { background: var(--green); }
+  .items.red li::before { background: var(--red); }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  @media (max-width: 520px) { .cols { grid-template-columns: 1fr; } }
+
+  /* ABOUT CARD */
+  .about-card {
+    background: var(--dark);
+    border-radius: 14px;
+    padding: 1.8rem;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-top: 0;
+    animation: fadeUp 0.4s ease 0.25s both;
+  }
+  .about-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(46,134,193,0.18);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .about-label {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 0.4rem;
+  }
+  .about-text {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.68);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 1.8rem;
+    font-size: 12.5px;
+  }
+  footer span { color: var(--accent-light); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="badge">Portfólio Profissional</div>
+    <h1>Guilherme Soares<br><em>da Silva</em></h1>
+    <p class="role">Gestor de Tráfego Pago · Estrategista Digital</p>
+    <div class="contacts">
+      <a class="ctag" href="https://wa.me/5527988955009" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91A16 16 0 0 0 12 12.91a16 16 0 0 0 4-.58l.3-.3a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 14z"/>
+        </svg>
+        (27) 98895-5009
+      </a>
+      <a class="ctag" href="https://instagram.com/guilhermdotrafego" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        @guilhermdotrafego
+      </a>
+      <a class="ctag" href="mailto:guilherme.digitalads01@gmail.com">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="m2 7 10 7 10-7"/>
+        </svg>
+        guilherme.digitalads01@gmail.com
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <p class="section-label">Serviços</p>
+
+  <!-- TRÁFEGO PAGO -->
+  <div class="svc" id="s1">
+    <div class="svc-head" onclick="tog(this)">
+      <div class="svc-left">
+        <div class="svc-icon" style="background:#E6F1FB">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2">
+            <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="svc-title">Gestão de Tráfego Pago</div>
+          <div class="svc-sub">Campanhas de anúncios para gerar vendas e leads</div>
+        </div>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="svc-body">
+      <div class="sec">
+        <div class="sec-t">Objetivo</div>
+        <p class="sec-desc">Estruturar, gerenciar e otimizar campanhas de anúncios para gerar mais vendas, leads ou oportunidades de negócio para a empresa.</p>
+      </div>
+      <div class="cols">
+        <div class="sec">
+          <div class="sec-t">Entregáveis</div>
+          <ul class="items green">
+            <li>Criação e estruturação das campanhas</li>
+            <li>Segmentação de público-alvo</li>
+            <li>Gestão de orçamento e lances</li>
+            <li>Otimização contínua dos anúncios</li>
+            <li>Relatório de desempenho mensal</li>
+            <li>Reunião de alinhamento periódica</li>
+          </ul>
+        </div>
+        <div class="sec">
+          <div class="sec-t">Não está incluso</div>
+          <ul class="items red">
+            <li>Criação de criativos (imagens e vídeos)</li>
+            <li>Produção de landing pages</li>
+            <li>Gestão de redes sociais orgânicas</li>
+            <li>Verba de anúncios (investimento em mídia)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUDITORIA -->
+  <div class="svc" id="s2">
+    <div class="svc-head" onclick="tog(this)">
+      <div class="svc-left">
+        <div class="svc-icon" style="background:#EAF3DE">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#3B6D11" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            <path d="M11 8v6M8 11h6"/>
+          </svg>
+        </div>
+        <div>
+          <div class="svc-title">Auditoria de Campanhas</div>
+          <div class="svc-sub">Análise e diagnóstico para maximizar seu ROI</div>
+        </div>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="svc-body">
+      <div class="sec">
+        <div class="sec-t">Objetivo</div>
+        <p class="sec-desc">Analisar campanhas ativas ou anteriores para identificar falhas, oportunidades de melhoria e pontos de otimização, propondo ajustes estratégicos para aumentar o retorno sobre o investimento.</p>
+      </div>
+      <div class="cols">
+        <div class="sec">
+          <div class="sec-t">Entregáveis</div>
+          <ul class="items green">
+            <li>Análise completa da estrutura das campanhas</li>
+            <li>Diagnóstico de falhas e gargalos</li>
+            <li>Mapeamento de oportunidades</li>
+            <li>Documento com recomendações estratégicas</li>
+            <li>Apresentação dos resultados</li>
+          </ul>
+        </div>
+        <div class="sec">
+          <div class="sec-t">Não está incluso</div>
+          <ul class="items red">
+            <li>Implementação das otimizações sugeridas</li>
+            <li>Gestão contínua das campanhas</li>
+            <li>Suporte pós-entrega da auditoria</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL MEDIA -->
+  <div class="svc" id="s3">
+    <div class="svc-head" onclick="tog(this)">
+      <div class="svc-left">
+        <div class="svc-icon" style="background:#FBEAF0">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#993556" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="svc-title">Social Media</div>
+          <div class="svc-sub">Planejamento e gestão de conteúdo nas redes sociais</div>
+        </div>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="svc-body">
+      <div class="sec">
+        <div class="sec-t">Objetivo</div>
+        <p class="sec-desc">Planejar, criar e gerenciar conteúdos nas redes sociais, fortalecendo a presença digital da marca, aumentando o engajamento e construindo autoridade para atrair e converter clientes.</p>
+      </div>
+      <div class="cols">
+        <div class="sec">
+          <div class="sec-t">Entregáveis</div>
+          <ul class="items green">
+            <li>Calendário editorial mensal</li>
+            <li>Criação de textos e roteiros</li>
+            <li>Publicação e agendamento de posts</li>
+            <li>Monitoramento de comentários</li>
+            <li>Relatório mensal de performance</li>
+          </ul>
+        </div>
+        <div class="sec">
+          <div class="sec-t">Não está incluso</div>
+          <ul class="items red">
+            <li>Produção de fotos e vídeos profissionais</li>
+            <li>Gestão de anúncios pagos</li>
+            <li>Criação de identidade visual</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETUP -->
+  <div class="svc" id="s4">
+    <div class="svc-head" onclick="tog(this)">
+      <div class="svc-left">
+        <div class="svc-icon" style="background:#FAEEDA">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#854F0B" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <div>
+          <div class="svc-title">Setup Inicial de Contas de Anúncios</div>
+          <div class="svc-sub">Configuração completa do ambiente de anúncios</div>
+        </div>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="svc-body">
+      <div class="sec">
+        <div class="sec-t">Objetivo</div>
+        <p class="sec-desc">Configurar corretamente toda a estrutura necessária para anúncios, incluindo contas, pixel, eventos e integrações, garantindo um ambiente organizado e preparado para gerar dados confiáveis e melhores resultados.</p>
+      </div>
+      <div class="cols">
+        <div class="sec">
+          <div class="sec-t">Entregáveis</div>
+          <ul class="items green">
+            <li>Criação do Gerenciador de Anúncios</li>
+            <li>Instalação e configuração do Pixel/Tag</li>
+            <li>Mapeamento e configuração de eventos</li>
+            <li>Integração com plataformas (e-commerce, CRM)</li>
+            <li>Teste e validação dos eventos</li>
+            <li>Documento de entrega com instruções</li>
+          </ul>
+        </div>
+        <div class="sec">
+          <div class="sec-t">Não está incluso</div>
+          <ul class="items red">
+            <li>Gestão de campanhas após o setup</li>
+            <li>Desenvolvimento de site ou landing page</li>
+            <li>Suporte técnico contínuo pós-setup</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Sobre mim</p>
+  <div class="about-card">
+    <div class="about-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7EC8E3" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5"/>
+        <path d="M2 12l10 5 10-5"/>
+      </svg>
+    </div>
+    <div>
+      <div class="about-label">Estrategista Digital</div>
+      <p class="about-text">Profissional em constante evolução, da execução para a estratégia — buscando entender o negócio como um todo e desenvolver soluções completas para crescimento, escala e posicionamento no digital.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Guilherme Soares da Silva · Gestor de Tráfego Pago</p>
+  <p style="margin-top:4px">
+    <span>@guilhermdotrafego</span> &nbsp;·&nbsp;
+    <span>(27) 98895-5009</span> &nbsp;·&nbsp;
+    <span>guilherme.digitalads01@gmail.com</span>
+  </p>
+</footer>
+
+<script>
+  function tog(head) {
+    var card = head.closest('.svc');
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
